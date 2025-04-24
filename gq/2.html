@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>给小洲的甜蜜生日祝福</title>
+    <style>
+        :root {
+            --primary-pink: #FF9AA2;
+            --secondary-pink: #FFB7B2;
+            --light-pink: #FFDAC1;
+            --mint: #E2F0CB;
+            --text-color: #5E5E5E;
+            --bg-opacity: rgba(255, 255, 255, 0.85);
+        }
+
+        @font-face {
+            font-family: 'Ma Shan Zheng';
+            src: url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FFF5F5, #FFF0F5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Ma Shan Zheng', cursive, 'Arial', sans-serif;
+            color: var(--text-color);
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 100;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            opacity: 0;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        #start-button {
+            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(255, 154, 162, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-width: 200px;
+            animation: pulse 2s infinite;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(255, 154, 162, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 25px rgba(255, 154, 162, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 5px 15px rgba(255, 154, 162, 0.4); }
+        }
+
+        #fireworks-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .message-box {
+            background-color: var(--bg-opacity);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid var(--light-pink);
+            opacity: 0;
+            transition: opacity 1s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .jumping-text {
+            display: inline-block;
+            animation: jump 0.8s ease infinite alternate;
+            transform-origin: bottom;
+        }
+
+        @keyframes jump {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
+        #flower-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            z-index: 20;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .flower-btn {
+            background: linear-gradient(45deg, var(--primary-pink), var(--mint));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(154, 205, 162, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: pulse 2s infinite;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        #flower-girl {
+            width: 250px;
+            height: 250px;
+            position: relative;
+            animation: bounce 1.5s infinite alternate cubic-bezier(0.2, 0.8, 0.2, 1);
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+        }
+
+        .girl-body {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="60" r="40" fill="%23FFD3B6"/><path d="M80,100 Q100,140 120,100 L100,180 L80,100" fill="%23FF9AA2"/><circle cx="80" cy="50" r="4" fill="%23333"/><circle cx="120" cy="50" r="4" fill="%23333"/><path d="M90,70 Q100,80 110,70" fill="none" stroke="%23333" stroke-width="2"/><path d="M60,40 L40,20 M140,40 L160,20" stroke="%23FFD3B6" stroke-width="4" stroke-linecap="round"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .hair {
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            left: -10%;
+            top: -20%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path d="M60,20 Q100,-20 140,20 Q160,40 160,80 Q140,120 100,140 Q60,120 40,80 Q40,40 60,20" fill="%23FF6B9D"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: hairBounce 2s infinite alternate;
+        }
+
+        @keyframes hairBounce {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        #flower {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            right: -20px;
+            bottom: 20px;
+            transform: scale(0);
+            transform-origin: bottom right;
+            animation: flowerFloat 3s infinite;
+        }
+
+        .flower-bloom {
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23FF9AA2"/><circle cx="50" cy="50" r="15" fill="%23FFD3B6"/><path d="M50,90 L50,50" stroke="%237CB518" stroke-width="5" stroke-linecap="round"/><path d="M30,30 Q50,20 70,30 Q80,50 70,70 Q50,80 30,70 Q20,50 30,30" fill="none" stroke="%23FF6B9D" stroke-width="2"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        @keyframes flowerFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        #final-message {
+            display: none;
+            width: 90%;
+            max-width: 500px;
+            padding: 25px;
+            border-radius: 20px;
+            line-height: 1.8;
+            text-align: left;
+            background: var(--bg-opacity);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 30;
+            font-size: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid var(--light-pink);
+            backdrop-filter: blur(10px);
+        }
+
+        .birthday-cake {
+            width: 180px;
+            height: 180px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="20" y="40" width="60" height="30" rx="5" fill="%23FF9AA2"/><rect x="30" y="30" width="40" height="10" rx="5" fill="%23FFD3B6"/><circle cx="40" cy="25" r="3" fill="%23FF6B6B"/><circle cx="60" cy="25" r="3" fill="%23FF6B6B"/><path d="M50,20 Q52,15 54,20" fill="none" stroke="%23FF6B6B" stroke-width="2"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin: 0 auto 20px;
+            position: relative;
+            animation: wiggle 2s infinite;
+        }
+
+        .candle {
+            position: absolute;
+            width: 8px;
+            height: 40px;
+            background: linear-gradient(to bottom, #FFD166, #FF9AA2);
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 4px;
+        }
+
+        .flame {
+            position: absolute;
+            width: 16px;
+            height: 25px;
+            background: radial-gradient(ellipse at center, #FFEE58 0%, #FF7043 70%, transparent 100%);
+            border-radius: 50% 50% 20% 20%;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: flicker 0.8s infinite alternate;
+            filter: blur(1px);
+        }
+
+        @keyframes flicker {
+            0%, 100% { transform: translateX(-50%) scale(1); height: 25px; width: 16px; }
+            25% { transform: translateX(-50%) scale(1.1, 0.9); height: 20px; width: 18px; }
+            50% { transform: translateX(-50%) scale(0.9, 1.1); height: 30px; width: 14px; }
+            75% { transform: translateX(-50%) scale(1.05, 0.95); height: 22px; width: 17px; }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: var(--primary-pink);
+            opacity: 0;
+            z-index: 10;
+        }
+
+        h1 {
+            color: var(--primary-pink);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.3rem;
+            color: var(--text-color);
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .tap-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            color: var(--primary-pink);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 100;
+            pointer-events: none;
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--light-pink);
+        }
+
+        .tap-hint span {
+            display: inline-block;
+            animation: tap 1.5s infinite;
+        }
+
+        @keyframes tap {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid var(--light-pink);
+        }
+
+        .music-icon {
+            font-size: 20px;
+            color: var(--primary-pink);
+        }
+
+        .petals {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .petal {
+            position: absolute;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10,0 Q12,5 10,10 Q8,5 10,0" fill="%23FF9AA2"/></svg>');
+            background-size: contain;
+            opacity: 0;
+            animation: petalFall 10s linear infinite;
+        }
+
+        @keyframes petalFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        /* 新增样式 */
+        .magic-bunny {
+            width: 250px;
+            height: 250px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="120" r="60" fill="%23fff" stroke="%23FF6B9D" stroke-width="3"/><circle cx="80" cy="80" r="30" fill="%23fff"/><circle cx="120" cy="80" r="30" fill="%23fff"/><circle cx="85" cy="70" r="8" fill="%23FF6B9D"/><circle cx="115" cy="70" r="8" fill="%23FF6B9D"/><path d="M100 140 Q110 160 100 170 Q90 160 100 140" fill="%23FF6B9D"/></svg>');
+            animation: bunnyHop 1s infinite alternate;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        @keyframes bunnyHop {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+
+        .enchanted-flower {
+            width: 120px;
+            height: 120px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23FF6B9D"/><path d="M50,20 Q55,15 60,20 Q65,25 60,30 Q55,35 50,30 Q45,35 40,30 Q35,25 40,20 Q45,15 50,20" fill="%23FFD3B6"/><path d="M50,80 L50,50" stroke="%237CB518" stroke-width="5"/></svg>');
+            animation: flowerMagic 2s infinite;
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+        }
+
+        @keyframes flowerMagic {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); opacity: 0.8; }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .photo-wall {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .photo-frame {
+            background: #fff;
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            aspect-ratio: 1;
+            background-size: cover;
+            cursor: pointer;
+        }
+
+        .photo-frame:hover {
+            transform: scale(1.05) rotate(3deg);
+        }
+
+        /* 优化原有样式 */
+        #flower-container {
+            top: 45% !important; /* 提高位置可见性 */
+        }
+
+        .flower-btn {
+            padding: 15px 40px !important;
+            font-size: 24px !important;
+        }
+        /* 新增问题文本样式 */
+.flower-question {
+    color: var(--primary-pink) !important;
+    font-size: 2rem !important;
+    margin: 15px 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    animation: textGlow 2s ease-in-out infinite;
+}
+
+/* 添加文字闪烁动画 */
+@keyframes textGlow {
+    0%, 100% { opacity: 1; text-shadow: 0 0 10px var(--primary-pink); }
+    50% { opacity: 0.9; text-shadow: 0 0 20px var(--secondary-pink); }
+}
+
+/* 确保message-box可见 */
+#flower-container .message-box {
+    opacity: 1 !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+}
+/* 照片文字提示 */
+.photo-caption {
+    position: fixed;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-opacity);
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    color: var(--primary-pink);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    white-space: nowrap;
+    border: 2px solid var(--light-pink);
+}
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    <div class="stars" id="stars"></div>
+    <div class="petals" id="petals"></div>
+    <canvas id="fireworks-canvas"></canvas>
+    
+    <div class="container" id="start-screen">
+        <div class="birthday-cake">
+            <div class="candle"></div>
+            <div class="flame"></div>
+        </div>
+        <h1><span class="jumping-text">亲爱的小洲</span>🎂</h1>
+        <div class="message-box">
+            <p><span class="jumping-text">今天是你的特别日子</span></p>
+            <p><span class="jumping-text">点击按钮开启甜蜜惊喜</span></p>
+        </div>
+        <button id="start-button">点亮生日魔法✨</button>
+    </div>
+
+
+       <!-- 修改后的HTML结构 -->
+       <div id="flower-container">
+        <div class="message-box" style="text-align: center;">
+            <h2 class="flower-question">🎁 你愿意收下这束魔法花花吗？</h2>
+        </div>
+        <button class="flower-btn" id="accept-flower">🌟 超级愿意！ 💐</button>
+        <div class="magic-bunny">
+            <div class="enchanted-flower"></div>
+        </div>
+      </div>
+
+  <!-- 新增照片墙 -->
+  <div class="photo-wall" id="memory-wall">
+    <div class="photo-frame" style="background-image: url('./photo/gk.jpg')"></div>
+    <div class="photo-frame" style="background-image: url('./photo/mao.jpg')"></div>
+    <div class="photo-frame" style="background-image: url('./photo/dy.jpg')"></div>
+  </div>
+
+    <div id="final-message"></div>
+
+    <div class="tap-hint" id="tap-hint">
+        <span>👆</span> 点击屏幕任意位置可看到烟花哦！
+    </div>
+<!-- 在body末尾保留原有音乐元素 -->
+<audio id="bg-music" loop autoplay>
+  <source src="sounds/方大同 - 麦恩莉.flac" type="audio/mpeg">
+</audio>
+    <div class="music-control" id="music-control">
+        <div class="music-icon">🎵</div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        // 创建漂浮的心形
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🤎', '🖤', '🤍'][Math.floor(Math.random() * 9)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = (Math.random() * 100 + 100) + '%';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heart.style.animationDelay = (Math.random() * 6) + 's';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        // 创建闪烁的星星
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = (Math.random() * 3) + 's';
+                star.style.width = (Math.random() * 6 + 3) + 'px';
+                star.style.height = star.style.width;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // 创建飘落的花瓣
+        function createPetals() {
+            const petalsContainer = document.getElementById('petals');
+            for (let i = 0; i < 30; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.width = (Math.random() * 20 + 10) + 'px';
+                petal.style.height = petal.style.width;
+                petal.style.animationDelay = (Math.random() * 10) + 's';
+                petal.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                petalsContainer.appendChild(petal);
+            }
+        }
+
+        // 初始化画布
+        const canvas = document.getElementById('fireworks-canvas');
+        const ctx = canvas.getContext('2d');
+        const DPR = window.devicePixelRatio || 1;
+        canvas.width = window.innerWidth * DPR;
+        canvas.height = window.innerHeight * DPR;
+        ctx.scale(DPR, DPR);
+
+        class FireworkParticle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color || 'hsl(' + (Math.random() * 60 + 320) + ', 100%, 70%)';
+                this.angle = Math.random() * 2 * Math.PI;
+                this.speed = Math.random() * 4 + 2;
+                this.alpha = 1;
+                this.size = Math.random() * 4 + 1;
+                this.decay = Math.random() * 0.02 + 0.01;
+            }
+
+            update() {
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed + 0.5;
+                this.alpha -= this.decay;
+                this.size *= 0.97;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+                ctx.fillStyle = this.color.replace('hsl', 'hsla').replace(')', ', ' + this.alpha + ')');
+                ctx.fill();
+            }
+        }
+
+        let fireworks = [];
+        let isFireworksPlaying = false;
+
+        function createFirework(x, y) {
+            const color = 'hsl(' + (Math.random() * 60 + 320) + ', 100%, 70%)';
+            const particleCount = Math.floor(Math.random() * 50) + 100;
+            
+            const newFirework = {
+                x: x || Math.random() * canvas.width * 0.6 + canvas.width * 0.2,
+                y: y || canvas.height,
+                particles: [],
+                life: 100
+            };
+
+            for (let i = 0; i < particleCount; i++) {
+                newFirework.particles.push(new FireworkParticle(newFirework.x, newFirework.y, color));
+            }
+
+            fireworks.push(newFirework);
+            return newFirework;
+        }
+
+        function animateFireworks() {
+            if (!isFireworksPlaying) return;
+            
+            ctx.fillStyle = 'rgba(255, 240, 245, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            fireworks = fireworks.filter(function(firework) {
+                firework.particles.forEach(function(p) { p.update(); });
+                firework.life--;
+                firework.particles.forEach(function(p) { p.draw(); });
+                return firework.life > 0 || firework.particles.some(function(p) { return p.alpha > 0; });
+            });
+
+            requestAnimationFrame(animateFireworks);
+        }
+
+        // 创建彩色纸屑效果
+        function createConfetti() {
+            const colors = ['#FF9AA2', '#FFB7B2', '#FFDAC1', '#E2F0CB', '#B5EAD7'];
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '0';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+                confetti.style.width = (Math.random() * 12 + 6) + 'px';
+                confetti.style.height = (Math.random() * 12 + 6) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                document.body.appendChild(confetti);
+
+                const animationDuration = Math.random() * 3 + 2;
+                gsap.to(confetti, {
+                    y: window.innerHeight,
+                    x: '+=' + ((Math.random() - 0.5) * 200),
+                    rotation: Math.random() * 360,
+                    opacity: 1,
+                    duration: animationDuration,
+                    ease: 'power1.out',
+                    onComplete: function() { confetti.remove(); }
+                });
+
+                gsap.to(confetti, {
+                    opacity: 0,
+                    duration: 0.5,
+                    delay: animationDuration - 0.5
+                });
+            }
+        }
+
+        // 页面加载时创建装饰元素
+        createHearts();
+        createStars();
+        createPetals();
+
+        // 显示点击提示
+        setTimeout(function() {
+            document.getElementById('tap-hint').style.opacity = 1;
+            setTimeout(function() {
+                document.getElementById('tap-hint').style.opacity = 0;
+            }, 5000);
+        }, 2000);
+
+        // 音乐控制
+        const bgMusic = document.getElementById('bg-music');
+        const musicControl = document.getElementById('music-control');
+        let isMusicPlaying = false;
+
+        musicControl.addEventListener('click', function() {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicControl.innerHTML = '<div class="music-icon">🔇</div>';
+            } else {
+                bgMusic.play();
+                musicControl.innerHTML = '<div class="music-icon">🎵</div>';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
+
+        // 交互逻辑
+        document.getElementById('start-button').addEventListener('click', function() {
+            isFireworksPlaying = true;
+            // 自动播放音乐
+            bgMusic.play();
+            isMusicPlaying = true;
+            musicControl.innerHTML = '<div class="music-icon">🎵</div>';
+            
+            // 吹蜡烛动画
+            gsap.to('.flame', {
+                scale: 0,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+            
+            gsap.to('#start-screen', { 
+                opacity: 0, 
+                display: 'none', 
+                duration: 1.2,
+                delay: 0.5,
+                onComplete: createConfetti
+            });
+            
+            // 生成粉色系烟花
+            for (let i = 0; i < 20; i++) {
+                setTimeout(function() {
+                    createFirework();
+                }, i * 150);
+            }
+            animateFireworks();
+
+            // 显示花朵选择
+            setTimeout(function() {
+                gsap.to('#flower-container', { 
+                    display: 'flex', 
+                    opacity: 1, 
+                    duration: 1.5,
+                    onStart: createConfetti
+                });
+                
+                // 显示花朵
+                setTimeout(function() {
+                    gsap.to('#flower', {
+                        scale: 1,
+                        duration: 1.5,
+                        ease: 'elastic.out(1, 0.3)'
+                    });
+                }, 1000);
+            }, 3000);
+        });
+
+        document.getElementById('accept-flower').addEventListener('click', function() {
+            createConfetti();
+            // 花朵送出动画
+            gsap.to('#flower', {
+                x: 150,
+                y: -150,
+                scale: 1.5,
+                duration: 1.5,
+                ease: 'power1.out'
+            });
+            
+            gsap.to('#flower-container', { 
+                opacity: 0, 
+                display: 'none', 
+                duration: 1.5,
+                delay: 1.5,
+                onComplete: function() {
+                    // 显示最终祝福
+                    initPhotoWall();
+                    const finalText = "亲爱的小洲，20岁生日快乐！\n\n在我的印象里，你一直是一个热烈大方、充满生命力的女孩。\n\n你古灵精怪，像春日里跳跃的阳光；\n你热爱生活，像夏日里盛开的花朵；\n即使偶尔有脆脆的像饼干的日子，\n那也是你独特魅力的一部分。\n\n不知不觉我们已经一起走过了那么长的时光，\n虽然我远在2000公里外，\n但愿这段文字能带去我最真挚的祝福。\n\n愿你新的一岁，\n眼里有星辰大海，心中有繁花似锦。\n愿你的每一天都如今天般明媚灿烂，\n成为那个你最想成为的自己！✨";
+                    const messageDiv = document.getElementById('final-message');
+                    messageDiv.style.display = 'block';
+                    
+                    let index = 0;
+                    const typing = function() {
+                        if (index <= finalText.length) {
+                            messageDiv.textContent = finalText.substring(0, index++);
+                            setTimeout(typing, 30);
+                        } else {
+                            // 最终效果 - 持续的心形动画
+                            setInterval(createConfetti, 1500);
+                        }
+                    };
+                    typing();
+                }
+            });
+        });
+
+        // 设备适配
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth * DPR;
+            canvas.height = window.innerHeight * DPR;
+            ctx.scale(DPR, DPR);
+        });
+
+        // 点击任意位置创建爱心
+        document.addEventListener('click', function(e) {
+            if (e.target.id !== 'start-button' && e.target.id !== 'accept-flower' && e.target.id !== 'music-control') {
+                const heart = document.createElement('div');
+                heart.innerHTML = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🤎', '🖤', '🤍'][Math.floor(Math.random() * 9)];
+                heart.style.position = 'absolute';
+                heart.style.left = e.clientX + 'px';
+                heart.style.top = e.clientY + 'px';
+                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                heart.style.transform = 'translate(-50%, -50%)';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '1000';
+                document.body.appendChild(heart);
+                
+                gsap.to(heart, {
+                    y: e.clientY - 150,
+                    opacity: 0,
+                    duration: 2,
+                    onComplete: function() { heart.remove(); }
+                });
+                
+                createFirework(e.clientX, e.clientY);
+            }
+        });
+        // 在原有JS代码最后添加
+function initPhotoWall() {
+    const photos = [
+        { url: './photo/gk.jpg', caption: '高考后的那个夏天' },
+        { url: './photo/mao.jpg', caption: '在猫咖看猫咪' },
+        { url: './photo/dy.jpg', caption: '看电影ing' }
+    ];
+
+    const wall = document.getElementById('memory-wall');
+    photos.forEach(photo => {
+        const frame = document.createElement('div');
+        frame.className = 'photo-frame';
+        frame.style.backgroundImage = `url('${photo.url}')`; 
+        
+        // 点击照片显示文字并触发特效
+        frame.addEventListener('click', function(e) {
+            createFirework(e.clientX, e.clientY);
+            showPhotoCaption(photo.caption);
+        });
+
+        wall.appendChild(frame);
+    });
+
+    // 照片墙入场动画
+    gsap.to(wall, {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        delay: 0.5
+    });
+}
+
+// 显示照片文字
+function showPhotoCaption(text) {
+    const caption = document.createElement('div');
+    caption.className = 'photo-caption';
+    caption.textContent = text;
+    
+    document.body.appendChild(caption);
+    gsap.from(caption, {
+        y: 50,
+        opacity: 0,
+        duration: 0.8
+    });
+    
+    setTimeout(() => {
+        gsap.to(caption, {
+            opacity: 0,
+            onComplete: () => caption.remove()
+        });
+    }, 2000);
+}
+    </script>
+</body>
+</html>
